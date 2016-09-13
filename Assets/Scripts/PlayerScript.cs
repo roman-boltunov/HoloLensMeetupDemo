@@ -53,6 +53,8 @@
         [UsedImplicitly]
         private void FixedUpdate()
         {
+            this.gamepad = GamepadClientSingleton.Instance.GamepadClient;
+
             // X button spawns player
             if (this.gamepad && this.gamepad.controllers[this.controllerId].button_X && !this.isSpawned)
             {

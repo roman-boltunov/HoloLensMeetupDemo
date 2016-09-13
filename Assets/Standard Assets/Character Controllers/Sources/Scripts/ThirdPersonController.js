@@ -138,8 +138,8 @@ function UpdateSmoothedMovementDirection ()
 	// Always orthogonal to the forward vector
 	var right = Vector3(forward.z, 0, -forward.x);
 
-	var v = Input.GetAxis("Horizontal");
-	var h = Input.GetAxis("Vertical");
+	var v = Input.GetAxis("Vertical");
+	var h = Input.GetAxis("Horizontal");
 
 	// Are we moving backwards or looking backwards
 	if (v < -0.2)
