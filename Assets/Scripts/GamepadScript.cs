@@ -1,5 +1,7 @@
 ﻿namespace Assets
 {
+    using Assets.Scripts;
+
     using HoloToolkit.Unity;
 
     using JetBrains.Annotations;

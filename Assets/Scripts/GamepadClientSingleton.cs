@@ -1,20 +1,29 @@
-﻿using HoloToolkit.Unity;
-
-public class GamepadClientSingleton : Singleton<GamepadClientSingleton>
+﻿namespace Assets.Scripts
 {
-    #region Public Properties
+    using HoloToolkit.Unity;
 
-    public Gamepad_Client GamepadClient { get; set; }
+    using UnityEngine;
 
-    #endregion
-
-    #region Other Methods
-
-    // Use this for initialization
-    private void Start()
+    /// <summary>
+    /// The gamepad client singleton.
+    /// </summary>
+    [RequireComponent(typeof(Gamepad_Client))]
+    public class GamepadClientSingleton : Singleton<GamepadClientSingleton>
     {
-        this.GamepadClient = this.GetComponent<Gamepad_Client>();
-    }
+        #region Public Properties
 
-    #endregion
+        public Gamepad_Client GamepadClient { get; set; }
+
+        #endregion
+
+        #region Other Methods
+
+        // Use this for initialization
+        private void Start()
+        {
+            this.GamepadClient = this.GetComponent<Gamepad_Client>();
+        }
+
+        #endregion
+    }
 }
