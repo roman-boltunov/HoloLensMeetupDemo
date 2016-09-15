@@ -30,3 +30,7 @@ Right Bumper - run <br/>
 Left Bumper - itching emotion <br/> 
 A - jump <br/> 
 B - meow emotion <br/> 
+<br/>
+<b>You can also say:</b><br/>
+<i>Sit down</i> - to get the kitten to sit<br/>
+<i>Hello</i> - get the kitten say "meow"
