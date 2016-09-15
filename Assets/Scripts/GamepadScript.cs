@@ -9,7 +9,7 @@
     /// <summary>
     /// The spawn player.
     /// </summary>
-    public class PlayerScript : MonoBehaviour
+    public class GamepadScript : MonoBehaviour
     {
         #region Fields
 
@@ -34,9 +34,9 @@
         private Gamepad_Client gamepad;
 
         /// <summary>
-        /// The is spawned.
+        /// The spawned player.
         /// </summary>
-        private bool isSpawned;
+        private GameObject spawnedPlayer;
 
         /// <summary>
         /// The controller ID.
@@ -48,18 +48,34 @@
         #region Other Methods
 
         /// <summary>
-        /// The fixed update.
+        /// The update.
         /// </summary>
         [UsedImplicitly]
-        private void FixedUpdate()
+        private void Update()
         {
             this.gamepad = GamepadClientSingleton.Instance.GamepadClient;
 
             // X button spawns player
-            if (this.gamepad && this.gamepad.controllers[this.controllerId].button_X && !this.isSpawned)
+            if (this.gamepad && this.gamepad.controllers[this.controllerId].button_X)
             {
-                UnityEngine.Object.Instantiate(this.player, Camera.main.transform.forward, Quaternion.identity);
-                this.isSpawned = true;
+                if (this.player == null)
+                {
+                    return;
+                }
+
+                
+
+#if UNITY_EDITOR
+                this.spawnedPlayer = this.spawnedPlayer ?? (GameObject)UnityEngine.Object.Instantiate(this.player, Camera.main.transform.forward, Quaternion.identity);
+#else
+                if (this.spawnedPlayer != null)
+                {
+                    this.spawnedPlayer.transform.position = GazeManager.Instance.HitInfo.point;
+                    return;
+                }
+
+                this.spawnedPlayer = (GameObject)UnityEngine.Object.Instantiate(this.player, GazeManager.Instance.HitInfo.point, Quaternion.identity);
+#endif
             }
 
             // Y button switches mesh
