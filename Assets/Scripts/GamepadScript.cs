@@ -1,7 +1,5 @@
-﻿namespace Assets
+﻿namespace Assets.Scripts
 {
-    using Assets.Scripts;
-
     using HoloToolkit.Unity;
 
     using JetBrains.Annotations;
@@ -16,14 +14,14 @@
         #region Fields
 
         /// <summary>
-        /// The player.
-        /// </summary>
-        public GameObject player;
-
-        /// <summary>
         /// The mesh switch timeout.
         /// </summary>
         public float meshSwitchTimeout = 0.25f;
+
+        /// <summary>
+        /// The player.
+        /// </summary>
+        private GameObject player;
 
         /// <summary>
         /// The last time switched.
@@ -34,11 +32,6 @@
         /// The gamepad.
         /// </summary>
         private Gamepad_Client gamepad;
-
-        /// <summary>
-        /// The spawned player.
-        /// </summary>
-        private GameObject spawnedPlayer;
 
         /// <summary>
         /// The controller ID.
@@ -65,18 +58,12 @@
                     return;
                 }
 
-                
-
+                this.player.SetActive(true);
 #if UNITY_EDITOR
-                this.spawnedPlayer = this.spawnedPlayer ?? (GameObject)UnityEngine.Object.Instantiate(this.player, Camera.main.transform.forward, Quaternion.identity);
+                this.player.transform.position = Camera.main.transform.forward;
+                this.player.transform.position = GazeManager.Instance.HitInfo.point;
 #else
-                if (this.spawnedPlayer != null)
-                {
-                    this.spawnedPlayer.transform.position = GazeManager.Instance.HitInfo.point;
-                    return;
-                }
-
-                this.spawnedPlayer = (GameObject)UnityEngine.Object.Instantiate(this.player, GazeManager.Instance.HitInfo.point, Quaternion.identity);
+                this.player.transform.position = GazeManager.Instance.HitInfo.point;
 #endif
             }
 
@@ -94,6 +81,8 @@
         [UsedImplicitly]
         private void Start()
         {
+            this.player = GameObject.FindGameObjectWithTag("Player");
+            this.player.SetActive(false);
             this.gamepad = GamepadClientSingleton.Instance.GamepadClient;
             this.controllerId = 0;
         }
